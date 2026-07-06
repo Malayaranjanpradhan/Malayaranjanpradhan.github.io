@@ -1,0 +1,500 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Malaya Ranjan Pradhan | DevOps & Cloud Engineer</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/js/all.min.js"></script>
+    <style>
+        :root {
+            --bg-color: #0a0f1d;
+            --card-bg: #111827;
+            --text-color: #f3f4f6;
+            --primary: #10b981; /* Emerald/DevOps Green */
+            --secondary: #3b82f6; /* Cloud Blue */
+            --accent: #8b5cf6; /* Tech Purple */
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            scroll-behavior: smooth;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            overflow-x: hidden;
+        }
+
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: var(--bg-color);
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #1f2937;
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: var(--primary);
+        }
+
+        /* Navigation */
+        nav {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background: rgba(10, 15, 29, 0.8);
+            backdrop-filter: blur(12px);
+            z-index: 1000;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1.2rem 5%;
+        }
+
+        .logo {
+            font-weight: 800;
+            font-size: 1.4rem;
+            letter-spacing: 1px;
+            background: linear-gradient(to right, var(--primary), var(--secondary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+        }
+
+        .nav-links a {
+            color: #9ca3af;
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+
+        .nav-links a:hover {
+            color: var(--primary);
+        }
+
+        /* Hero Section with Terminal */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 8rem 5% 4rem 5%;
+            gap: 4rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .hero-info {
+            flex: 1;
+        }
+
+        .hero-info h1 {
+            font-size: 3.5rem;
+            line-height: 1.2;
+            margin-bottom: 1rem;
+        }
+
+        .hero-info .gradient-text {
+            background: linear-gradient(to right, var(--primary), var(--secondary), var(--accent));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .hero-info p {
+            color: #9ca3af;
+            font-size: 1.2rem;
+            margin-bottom: 2rem;
+            line-height: 1.6;
+        }
+
+        .cta-buttons {
+            display: flex;
+            gap: 1rem;
+        }
+
+        .btn {
+            padding: 0.8rem 2rem;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+        }
+
+        .btn-primary {
+            background: var(--primary);
+            color: #000;
+            box-shadow: 0 4px 14px rgba(16, 185, 129, 0.3);
+        }
+
+        .btn-secondary {
+            border: 2px solid #1f2937;
+            color: var(--text-color);
+        }
+
+        .btn-secondary:hover {
+            background: #1f2937;
+        }
+
+        /* Interactive Terminal Mockup */
+        .hero-visual {
+            flex: 1;
+            display: flex;
+            justify-content: center;
+        }
+
+        .terminal {
+            width: 100%;
+            max-width: 500px;
+            background: #05070f;
+            border: 1px solid #1f2937;
+            border-radius: 10px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.5);
+            overflow: hidden;
+        }
+
+        .terminal-header {
+            background: #111827;
+            padding: 0.7rem 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+        }
+        .dot-red { background: #ef4444; }
+        .dot-yellow { background: #f59e0b; }
+        .dot-green { background: #10b981; }
+        .terminal-title {
+            margin-left: auto;
+            margin-right: auto;
+            font-family: monospace;
+            font-size: 0.85rem;
+            color: #6b7280;
+        }
+
+        .terminal-body {
+            padding: 1.5rem;
+            font-family: 'Courier New', Courier, monospace;
+            font-size: 0.95rem;
+            color: #a7f3d0;
+            line-height: 1.6;
+        }
+
+        .command { color: var(--text-color); }
+        .output { color: #9ca3af; margin-bottom: 1rem; }
+        .keyword { color: #f43f5e; }
+        .string { color: #3b82f6; }
+
+        /* Sections General */
+        section {
+            padding: 6rem 5%;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .section-title {
+            font-size: 2.2rem;
+            margin-bottom: 3rem;
+            text-align: center;
+            position: relative;
+        }
+
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 60px;
+            height: 4px;
+            background: var(--primary);
+            border-radius: 2px;
+        }
+
+        /* Multi-Cloud Cloud Grid */
+        .cloud-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 2rem;
+        }
+
+        .cloud-card {
+            background: var(--card-bg);
+            border: 1px solid #1f2937;
+            border-radius: 12px;
+            padding: 2rem;
+            text-align: center;
+            transition: transform 0.3s, border-color 0.3s;
+        }
+
+        .cloud-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .card-aws:hover { border-color: #ff9900; }
+        .card-azure:hover { border-color: #0089d6; }
+        .card-gcp:hover { border-color: #4285f4; }
+
+        .cloud-card i {
+            font-size: 3rem;
+            margin-bottom: 1.5rem;
+        }
+        .fa-aws { color: #ff9900; }
+        .fa-microsoft { color: #0089d6; }
+        .fa-google { color: #4285f4; }
+
+        .cloud-card h3 {
+            margin-bottom: 1rem;
+            font-size: 1.4rem;
+        }
+
+        .cloud-card ul {
+            list-style: none;
+            color: #9ca3af;
+            text-align: left;
+            display: inline-block;
+        }
+
+        .cloud-card ul li {
+            margin-bottom: 0.5rem;
+        }
+
+        .cloud-card ul li i {
+            font-size: 0.9rem;
+            margin-right: 0.5rem;
+            color: var(--primary);
+        }
+
+        /* Tech Stack Grid */
+        .skills-container {
+            background: var(--card-bg);
+            border: 1px solid #1f2937;
+            border-radius: 12px;
+            padding: 3rem;
+        }
+
+        .skill-group {
+            margin-bottom: 2rem;
+        }
+
+        .skill-group h4 {
+            margin-bottom: 1rem;
+            color: #9ca3af;
+            text-transform: uppercase;
+            font-size: 0.9rem;
+            letter-spacing: 1px;
+        }
+
+        .badges {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.8rem;
+        }
+
+        .badge {
+            background: #1f2937;
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            border: 1px solid transparent;
+            transition: all 0.3s;
+        }
+
+        .badge:hover {
+            border-color: var(--primary);
+            background: rgba(16, 185, 129, 0.05);
+            color: var(--primary);
+        }
+
+        /* Footer */
+        footer {
+            background: #05070f;
+            padding: 3rem 5%;
+            text-align: center;
+            border-top: 1px solid #1f2937;
+            color: #6b7280;
+        }
+
+        .social-icons {
+            display: flex;
+            justify-content: center;
+            gap: 1.5rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .social-icons a {
+            color: #9ca3af;
+            font-size: 1.5rem;
+            transition: color 0.3s;
+        }
+
+        .social-icons a:hover {
+            color: var(--primary);
+        }
+
+        /* Mobile Optimization */
+        @media (max-width: 768px) {
+            .hero {
+                flex-direction: column;
+                text-align: center;
+                padding-top: 6rem;
+            }
+            .hero-info h1 {
+                font-size: 2.5rem;
+            }
+            .cta-buttons {
+                justify-content: center;
+            }
+            .nav-links {
+                display: none; /* Simplification for quick deploy */
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <nav>
+        <div class="logo">MRPRADHAN.DEV</div>
+        <ul class="nav-links">
+            <li><a href="#about">About</a></li>
+            <li><a href="#multicloud">Multi-Cloud</a></li>
+            <li><a href="#skills">Tech Stack</a></li>
+            <li><a href="#contact">Contact</a></li>
+        </ul>
+    </nav>
+
+    <section class="hero" id="about">
+        <div class="hero-info">
+            <h1>Hi, I'm <br><span class="gradient-text">Malaya Ranjan Pradhan</span></h1>
+            <p>An MCA Graduate specializing in building high-availability multi-cloud infrastructure and orchestrating automated pipelines. Turning complex architecture deployments into code.</p>
+            <div class="cta-buttons">
+                <a href="#contact" class="btn btn-primary">Let's Connect</a>
+                <a href="#skills" class="btn btn-secondary">View Tech Stack</a>
+            </div>
+        </div>
+        
+        <div class="hero-visual">
+            <div class="terminal">
+                <div class="terminal-header">
+                    <div class="dot dot-red"></div>
+                    <div class="dot dot-yellow"></div>
+                    <div class="dot dot-green"></div>
+                    <div class="terminal-title">bash - devops_status.sh</div>
+                </div>
+                <div class="terminal-body">
+                    <span class="command">$ curl -s https://api.malaya.dev/status</span>
+                    <div class="output">
+                        { <br>
+                        &nbsp;&nbsp;"degree": <span class="string">"MCA"</span>, <br>
+                        &nbsp;&nbsp;"focus": <span class="string">"Multi-Cloud & DevOps"</span>, <br>
+                        &nbsp;&nbsp;"location": <span class="string">"Hyderabad, India"</span> <br>
+                        }
+                    </div>
+                    <span class="command">$ terraform plan</span>
+                    <div class="output" style="color: #6ee7b7;">
+                        Plan: 3 to add, 0 to change, 0 to destroy.
+                    </div>
+                    <span class="command">$ <span class="keyword">loading...</span></span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="multicloud">
+        <h2 class="section-title">Multi-Cloud Ecosystem</h2>
+        <div class="cloud-grid">
+            
+            <div class="cloud-card card-aws">
+                <i class="fab fa-aws"></i>
+                <h3>Amazon Web Services</h3>
+                <ul>
+                    <li><i class="fas fa-check"></i> Compute: EC2, Lambda</li>
+                    <li><i class="fas fa-check"></i> Storage: S3, EBS</li>
+                    <li><i class="fas fa-check"></i> Networking: VPC, IAM Security</li>
+                </ul>
+            </div>
+
+            <div class="cloud-card card-azure">
+                <i class="fab fa-microsoft"></i>
+                <h3>Microsoft Azure</h3>
+                <ul>
+                    <li><i class="fas fa-check"></i> Computing: Virtual Machines</li>
+                    <li><i class="fas fa-check"></i> Data: Azure Blob Storage</li>
+                    <li><i class="fas fa-check"></i> Services: Azure Resource Manager</li>
+                </ul>
+            </div>
+
+            <div class="cloud-card card-gcp">
+                <i class="fab fa-google"></i>
+                <h3>Google Cloud</h3>
+                <ul>
+                    <li><i class="fas fa-check"></i> Instances: Compute Engine</li>
+                    <li><i class="fas fa-check"></i> Systems: Cloud Storage</li>
+                    <li><i class="fas fa-check"></i> Engine: VPC Networks</li>
+                </ul>
+            </div>
+
+        </div>
+    </section>
+
+    <section id="skills">
+        <h2 class="section-title">Core Competencies & Tools</h2>
+        <div class="skills-container">
+            
+            <div class="skill-group">
+                <h4>DevOps Frameworks & Automation</h4>
+                <div class="badges">
+                    <div class="badge"><i class="fas fa-infinity"></i> CI/CD Pipelines</div>
+                    <div class="badge"><i class="fas fa-network-wired"></i> Infrastructure as Code</div>
+                    <div class="badge"><i class="fab fa-linux"></i> Linux Systems Administration</div>
+                    <div class="badge"><i class="fas fa-terminal"></i> Shell Scripting</div>
+                </div>
+            </div>
+
+            <div class="skill-group">
+                <h4>Languages & Logic</h4>
+                <div class="badges">
+                    <div class="badge"><i class="fab fa-python"></i> Python Programming</div>
+                    <div class="badge"><i class="fas fa-code"></i> Data Structures & Algorithms</div>
+                    <div class="badge"><i class="fas fa-database"></i> SQL / Relational Databases</div>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <footer id="contact">
+        <div class="social-icons">
+            <a href="https://www.linkedin.com/in/malaya-ranjan-pradhan-9a040127b/" target="_blank"><i class="fab fa-linkedin"></i></a>
+            <a href="#" target="_blank"><i class="fab fa-github"></i></a>
+            <a href="mailto:your-email@example.com"><i class="fas fa-envelope"></i></a>
+        </div>
+        <p>&copy; 2026 Malaya Ranjan Pradhan. Engineered with Passion.</p>
+    </footer>
+
+</body>
+</html>
