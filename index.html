@@ -7,12 +7,12 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/js/all.min.js"></script>
     <style>
         :root {
-            --bg-color: #0a0f1d;
-            --card-bg: #111827;
+            --bg-color: #060b16;
+            --card-bg: rgba(17, 24, 39, 0.7);
             --text-color: #f3f4f6;
-            --primary: #10b981; /* Emerald/DevOps Green */
-            --secondary: #3b82f6; /* Cloud Blue */
-            --accent: #8b5cf6; /* Tech Purple */
+            --primary: #00f2fe; /* Neon Cyan */
+            --secondary: #4facfe; /* Electric Blue */
+            --accent: #7f00ff; /* Deep Violet */
         }
 
         * {
@@ -27,29 +27,32 @@
             background-color: var(--bg-color);
             color: var(--text-color);
             overflow-x: hidden;
+            position: relative;
+        }
+
+        /* Animated Particle Canvas Background */
+        #bg-canvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            pointer-events: none;
         }
 
         /* Custom Scrollbar */
-        ::-webkit-scrollbar {
-            width: 8px;
-        }
-        ::-webkit-scrollbar-track {
-            background: var(--bg-color);
-        }
-        ::-webkit-scrollbar-thumb {
-            background: #1f2937;
-            border-radius: 4px;
-        }
-        ::-webkit-scrollbar-thumb:hover {
-            background: var(--primary);
-        }
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: var(--bg-color); }
+        ::-webkit-scrollbar-thumb { background: #1f2937; border-radius: 4px; }
+        ::-webkit-scrollbar-thumb:hover { background: var(--primary); }
 
         /* Navigation */
         nav {
             position: fixed;
             top: 0;
             width: 100%;
-            background: rgba(10, 15, 29, 0.8);
+            background: rgba(6, 11, 22, 0.8);
             backdrop-filter: blur(12px);
             z-index: 1000;
             border-bottom: 1px solid rgba(255, 255, 255, 0.05);
@@ -81,11 +84,9 @@
             transition: color 0.3s;
         }
 
-        .nav-links a:hover {
-            color: var(--primary);
-        }
+        .nav-links a:hover { color: var(--primary); }
 
-        /* Hero Section with Terminal */
+        /* Hero Section */
         .hero {
             min-height: 100vh;
             display: flex;
@@ -97,9 +98,34 @@
             margin: 0 auto;
         }
 
-        .hero-info {
-            flex: 1;
+        .hero-info { flex: 1; }
+
+        /* High Visibility Top Contact Header */
+        .top-contact {
+            display: flex;
+            gap: 1.5rem;
+            margin-bottom: 1.5rem;
+            background: rgba(255, 255, 255, 0.03);
+            padding: 0.6rem 1.2rem;
+            border-radius: 30px;
+            width: fit-content;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(5px);
+            animation: pulse 3s infinite alternate;
         }
+
+        .top-contact a {
+            color: var(--primary);
+            text-decoration: none;
+            font-size: 0.9rem;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            transition: color 0.3s;
+        }
+
+        .top-contact a:hover { color: var(--text-color); }
 
         .hero-info h1 {
             font-size: 3.5rem;
@@ -107,49 +133,45 @@
             margin-bottom: 1rem;
         }
 
-        .hero-info .gradient-text {
+        .gradient-text {
             background: linear-gradient(to right, var(--primary), var(--secondary), var(--accent));
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
         }
 
-        .hero-info p {
-            color: #9ca3af;
+        /* Typing Effect Container */
+        .typing-container {
             font-size: 1.2rem;
+            color: #9ca3af;
             margin-bottom: 2rem;
+            min-height: 60px;
             line-height: 1.6;
         }
 
-        .cta-buttons {
-            display: flex;
-            gap: 1rem;
-        }
+        .cta-buttons { display: flex; gap: 1rem; }
 
         .btn {
             padding: 0.8rem 2rem;
             border-radius: 8px;
             text-decoration: none;
             font-weight: 600;
-            transition: transform 0.2s, box-shadow 0.2s;
+            transition: all 0.3s ease;
         }
 
         .btn:hover {
-            transform: translateY(-2px);
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(0, 242, 254, 0.3);
         }
 
         .btn-primary {
-            background: var(--primary);
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
             color: #000;
-            box-shadow: 0 4px 14px rgba(16, 185, 129, 0.3);
         }
 
         .btn-secondary {
             border: 2px solid #1f2937;
             color: var(--text-color);
-        }
-
-        .btn-secondary:hover {
-            background: #1f2937;
+            background: rgba(0,0,0,0.2);
         }
 
         /* Interactive Terminal Mockup */
@@ -162,11 +184,18 @@
         .terminal {
             width: 100%;
             max-width: 500px;
-            background: #05070f;
-            border: 1px solid #1f2937;
+            background: rgba(5, 7, 15, 0.85);
+            border: 1px solid rgba(255, 255, 255, 0.1);
             border-radius: 10px;
-            box-shadow: 0 20px 40px rgba(0,0,0,0.5);
+            box-shadow: 0 20px 50px rgba(0,0,0,0.6);
             overflow: hidden;
+            backdrop-filter: blur(10px);
+            transform: perspective(1000px) rotateY(-5deg);
+            transition: transform 0.5s;
+        }
+
+        .terminal:hover {
+            transform: perspective(1000px) rotateY(0deg) scale(1.02);
         }
 
         .terminal-header {
@@ -177,21 +206,11 @@
             gap: 0.5rem;
         }
 
-        .dot {
-            width: 12px;
-            height: 12px;
-            border-radius: 50%;
-        }
+        .dot { width: 12px; height: 12px; border-radius: 50%; }
         .dot-red { background: #ef4444; }
         .dot-yellow { background: #f59e0b; }
         .dot-green { background: #10b981; }
-        .terminal-title {
-            margin-left: auto;
-            margin-right: auto;
-            font-family: monospace;
-            font-size: 0.85rem;
-            color: #6b7280;
-        }
+        .terminal-title { margin-left: auto; margin-right: auto; font-family: monospace; font-size: 0.85rem; color: #6b7280; }
 
         .terminal-body {
             padding: 1.5rem;
@@ -207,175 +226,70 @@
         .string { color: #3b82f6; }
 
         /* Sections General */
-        section {
-            padding: 6rem 5%;
-            max-width: 1200px;
-            margin: 0 auto;
-        }
-
-        .section-title {
-            font-size: 2.2rem;
-            margin-bottom: 3rem;
-            text-align: center;
-            position: relative;
-        }
-
+        section { padding: 6rem 5%; max-width: 1200px; margin: 0 auto; position: relative; }
+        .section-title { font-size: 2.2rem; margin-bottom: 3rem; text-align: center; position: relative; }
         .section-title::after {
-            content: '';
-            position: absolute;
-            bottom: -10px;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 60px;
-            height: 4px;
-            background: var(--primary);
-            border-radius: 2px;
+            content: ''; position: absolute; bottom: -10px; left: 50%; transform: translateX(-50%);
+            width: 60px; height: 4px; background: var(--primary); border-radius: 2px;
         }
 
-        /* Multi-Cloud Cloud Grid */
-        .cloud-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 2rem;
-        }
-
+        /* Cloud Cards Multi-Cloud Elements */
+        .cloud-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 2rem; }
         .cloud-card {
-            background: var(--card-bg);
-            border: 1px solid #1f2937;
-            border-radius: 12px;
-            padding: 2rem;
-            text-align: center;
-            transition: transform 0.3s, border-color 0.3s;
+            background: var(--card-bg); border: 1px solid rgba(255, 255, 255, 0.05); border-radius: 12px;
+            padding: 2rem; text-align: center; transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            backdrop-filter: blur(5px);
         }
 
-        .cloud-card:hover {
-            transform: translateY(-5px);
-        }
+        .cloud-card:hover { transform: translateY(-10px); background: rgba(17, 24, 39, 0.9); box-shadow: 0 15px 30px rgba(0,0,0,0.4); }
+        .card-aws:hover { border-color: #ff9900; box-shadow: 0 0 20px rgba(255, 153, 0, 0.2); }
+        .card-azure:hover { border-color: #0089d6; box-shadow: 0 0 20px rgba(0, 137, 214, 0.2); }
+        .card-gcp:hover { border-color: #4285f4; box-shadow: 0 0 20px rgba(66, 133, 244, 0.2); }
 
-        .card-aws:hover { border-color: #ff9900; }
-        .card-azure:hover { border-color: #0089d6; }
-        .card-gcp:hover { border-color: #4285f4; }
-
-        .cloud-card i {
-            font-size: 3rem;
-            margin-bottom: 1.5rem;
-        }
+        .cloud-card i { font-size: 3rem; margin-bottom: 1.5rem; }
         .fa-aws { color: #ff9900; }
         .fa-microsoft { color: #0089d6; }
         .fa-google { color: #4285f4; }
+        .cloud-card h3 { margin-bottom: 1rem; font-size: 1.4rem; }
+        .cloud-card ul { list-style: none; color: #9ca3af; text-align: left; display: inline-block; }
+        .cloud-card ul li { margin-bottom: 0.5rem; }
+        .cloud-card ul li i { font-size: 0.9rem; margin-right: 0.5rem; color: var(--primary); }
 
-        .cloud-card h3 {
-            margin-bottom: 1rem;
-            font-size: 1.4rem;
-        }
-
-        .cloud-card ul {
-            list-style: none;
-            color: #9ca3af;
-            text-align: left;
-            display: inline-block;
-        }
-
-        .cloud-card ul li {
-            margin-bottom: 0.5rem;
-        }
-
-        .cloud-card ul li i {
-            font-size: 0.9rem;
-            margin-right: 0.5rem;
-            color: var(--primary);
-        }
-
-        /* Tech Stack Grid */
-        .skills-container {
-            background: var(--card-bg);
-            border: 1px solid #1f2937;
-            border-radius: 12px;
-            padding: 3rem;
-        }
-
-        .skill-group {
-            margin-bottom: 2rem;
-        }
-
-        .skill-group h4 {
-            margin-bottom: 1rem;
-            color: #9ca3af;
-            text-transform: uppercase;
-            font-size: 0.9rem;
-            letter-spacing: 1px;
-        }
-
-        .badges {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 0.8rem;
-        }
-
+        /* Skills Container Section */
+        .skills-container { background: var(--card-bg); border: 1px solid rgba(255, 255, 255, 0.05); border-radius: 12px; padding: 3rem; backdrop-filter: blur(5px); }
+        .skill-group { margin-bottom: 2rem; }
+        .skill-group h4 { margin-bottom: 1rem; color: #9ca3af; text-transform: uppercase; font-size: 0.9rem; letter-spacing: 1px; }
+        .badges { display: flex; flex-wrap: wrap; gap: 0.8rem; }
+        
         .badge {
-            background: #1f2937;
-            padding: 0.5rem 1rem;
-            border-radius: 20px;
-            font-size: 0.9rem;
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-            border: 1px solid transparent;
-            transition: all 0.3s;
+            background: rgba(31, 41, 55, 0.6); padding: 0.5rem 1rem; border-radius: 20px; font-size: 0.9rem;
+            display: flex; align-items: center; gap: 0.5rem; border: 1px solid transparent; transition: all 0.3s;
         }
 
-        .badge:hover {
-            border-color: var(--primary);
-            background: rgba(16, 185, 129, 0.05);
-            color: var(--primary);
+        .badge:hover { border-color: var(--primary); background: rgba(0, 242, 254, 0.1); color: var(--primary); transform: scale(1.05); }
+
+        /* Footer Element Details */
+        footer { background: #03060d; padding: 3rem 5%; text-align: center; border-top: 1px solid rgba(255, 255, 255, 0.05); color: #6b7280; }
+        .social-icons { display: flex; justify-content: center; gap: 1.5rem; margin-bottom: 1.5rem; }
+        .social-icons a { color: #9ca3af; font-size: 1.5rem; transition: all 0.3s; }
+        .social-icons a:hover { color: var(--primary); transform: scale(1.2); }
+
+        @keyframes pulse {
+            0% { box-shadow: 0 0 0 0 rgba(0, 242, 254, 0.2); }
+            100% { box-shadow: 0 0 15px 2px rgba(0, 242, 254, 0.4); }
         }
 
-        /* Footer */
-        footer {
-            background: #05070f;
-            padding: 3rem 5%;
-            text-align: center;
-            border-top: 1px solid #1f2937;
-            color: #6b7280;
-        }
-
-        .social-icons {
-            display: flex;
-            justify-content: center;
-            gap: 1.5rem;
-            margin-bottom: 1.5rem;
-        }
-
-        .social-icons a {
-            color: #9ca3af;
-            font-size: 1.5rem;
-            transition: color 0.3s;
-        }
-
-        .social-icons a:hover {
-            color: var(--primary);
-        }
-
-        /* Mobile Optimization */
         @media (max-width: 768px) {
-            .hero {
-                flex-direction: column;
-                text-align: center;
-                padding-top: 6rem;
-            }
-            .hero-info h1 {
-                font-size: 2.5rem;
-            }
-            .cta-buttons {
-                justify-content: center;
-            }
-            .nav-links {
-                display: none; /* Simplification for quick deploy */
-            }
+            .hero { flex-direction: column; text-align: center; padding-top: 6rem; }
+            .hero-info h1 { font-size: 2.5rem; }
+            .cta-buttons, .top-contact { justify-content: center; margin: 0 auto 1.5rem auto; }
+            .nav-links { display: none; }
         }
     </style>
 </head>
 <body>
+
+    <canvas id="bg-canvas"></canvas>
 
     <nav>
         <div class="logo">MRPRADHAN.DEV</div>
@@ -389,8 +303,17 @@
 
     <section class="hero" id="about">
         <div class="hero-info">
+            <div class="top-contact">
+                <a href="tel:+918018490994"><i class="fas fa-phone"></i> +91 8018490994</a>
+                <a href="mailto:skp.pp.mrp@gmail.com"><i class="fas fa-envelope"></i> skp.pp.mrp@gmail.com</a>
+            </div>
+            
             <h1>Hi, I'm <br><span class="gradient-text">Malaya Ranjan Pradhan</span></h1>
-            <p>An MCA Graduate specializing in building high-availability multi-cloud infrastructure and orchestrating automated pipelines. Turning complex architecture deployments into code.</p>
+            
+            <div class="typing-container">
+                <span id="typing-text"></span>
+            </div>
+
             <div class="cta-buttons">
                 <a href="#contact" class="btn btn-primary">Let's Connect</a>
                 <a href="#skills" class="btn btn-secondary">View Tech Stack</a>
@@ -415,10 +338,10 @@
                         }
                     </div>
                     <span class="command">$ terraform plan</span>
-                    <div class="output" style="color: #6ee7b7;">
-                        Plan: 3 to add, 0 to change, 0 to destroy.
+                    <div class="output" style="color: #00f2fe;">
+                        Plan: 4 to add, 0 to change, 0 to destroy.
                     </div>
-                    <span class="command">$ <span class="keyword">loading...</span></span>
+                    <span class="command">$ <span class="keyword">monitoring live nodes...</span></span>
                 </div>
             </div>
         </div>
@@ -476,11 +399,12 @@
             </div>
 
             <div class="skill-group">
-                <h4>Languages & Logic</h4>
+                <h4>Cloud Automation & Operations</h4>
                 <div class="badges">
-                    <div class="badge"><i class="fab fa-python"></i> Python Programming</div>
-                    <div class="badge"><i class="fas fa-code"></i> Data Structures & Algorithms</div>
-                    <div class="badge"><i class="fas fa-database"></i> SQL / Relational Databases</div>
+                    <div class="badge"><i class="fab fa-python"></i> Python Scripting</div>
+                    <div class="badge"><i class="fas fa-server"></i> Virtualization & Computing</div>
+                    <div class="badge"><i class="fas fa-shield-alt"></i> IAM & Cloud Security</div>
+                    <div class="badge"><i class="fas fa-cloud"></i> Multi-Cloud Infrastructure</div>
                 </div>
             </div>
 
@@ -492,9 +416,99 @@
             <a href="https://www.linkedin.com/in/malaya-ranjan-pradhan-9a040127b/" target="_blank"><i class="fab fa-linkedin"></i></a>
             <a href="https://github.com/Malayaranjanpradhan" target="_blank"><i class="fab fa-github"></i></a>
             <a href="mailto:skp.pp.mrp@gmail.com"><i class="fas fa-envelope"></i></a>
+            <a href="tel:+918018490994"><i class="fas fa-phone"></i></a>
         </div>
         <p>&copy; 2026 Malaya Ranjan Pradhan. Engineered with Passion.</p>
     </footer>
 
+    <script>
+        // 1. Particle Motion Background Engine
+        const canvas = document.getElementById('bg-canvas');
+        const ctx = canvas.getContext('2d');
+        let particles = [];
+
+        function resizeCanvas() {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+        }
+        window.addEventListener('resize', resizeCanvas);
+        resizeCanvas();
+
+        class Particle {
+            constructor() {
+                this.x = Math.random() * canvas.width;
+                this.y = Math.random() * canvas.height;
+                this.size = Math.random() * 2 + 0.5;
+                this.speedX = Math.random() * 0.5 - 0.25;
+                this.speedY = Math.random() * 0.5 - 0.25;
+                this.alpha = Math.random() * 0.5 + 0.2;
+            }
+            update() {
+                this.x += this.speedX;
+                this.y += this.speedY;
+                if (this.x > canvas.width) this.x = 0;
+                if (this.x < 0) this.x = canvas.width;
+                if (this.y > canvas.height) this.y = 0;
+                if (this.y < 0) this.y = canvas.height;
+            }
+            draw() {
+                ctx.fillStyle = `rgba(0, 242, 254, ${this.alpha})`;
+                ctx.beginPath();
+                ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+                ctx.fill();
+            }
+        }
+
+        function initParticles() {
+            particles = [];
+            for (let i = 0; i < 75; i++) {
+                particles.push(new Particle());
+            }
+        }
+        initParticles();
+
+        function animateParticles() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            particles.forEach(p => {
+                p.update();
+                p.draw();
+            });
+            requestAnimationFrame(animateParticles);
+        }
+        animateParticles();
+
+        // 2. Typing Script Engine
+        const phrases = [
+            "An MCA Graduate specializing in building high-availability multi-cloud infrastructure.",
+            "Architecting automated workflows and robust CI/CD pipelines.",
+            "Turning complex cloud architecture deployments into code daily."
+        ];
+        let phraseIdx = 0;
+        let charIdx = 0;
+        let isDeleting = false;
+        const typingEl = document.getElementById('typing-text');
+
+        function typeLoop() {
+            const currentPhrase = phrases[phraseIdx];
+            if (!isDeleting) {
+                typingEl.textContent = currentPhrase.substring(0, charIdx + 1);
+                charIdx++;
+                if (charIdx === currentPhrase.length) {
+                    isDeleting = true;
+                    setTimeout(typeLoop, 2000); // Wait at end
+                    return;
+                }
+            } else {
+                typingEl.textContent = currentPhrase.substring(0, charIdx - 1);
+                charIdx--;
+                if (charIdx === 0) {
+                    isDeleting = false;
+                    phraseIdx = (phraseIdx + 1) % phrases.length;
+                }
+            }
+            setTimeout(typeLoop, isDeleting ? 30 : 60);
+        }
+        typeLoop();
+    </script>
 </body>
 </html>
